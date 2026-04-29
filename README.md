@@ -16,5 +16,5 @@ Proje süreci, ara rapor dökümanındaki rehbere tam uyumlu şekilde GitHub üz
 ## 📝 Aktif Tartışmalar ve Güncel Kararlar
 * **[ISSUE #1]** Veri yapısı olarak bellek verimliliği için "Adjacency List" (Komşuluk Listesi) kullanımı kararlaştırıldı.
 * **[ISSUE #2]** Minumum yol-maliyet hesaplama için "Prim Algoritması"nı seçtik bundan dolayı da Min-Heap veri yapısı kullanılmasına karar verilmişir.
-* **[ISSUE #3]** Dinamik güncelleme için 10-80 düğüm aralığında performans test senaryoları oluşturulması planlanıyor.
+* **[ISSUE #3]** Dinamik güncelleme için 20-100 düğüm aralığında performans test senaryoları oluşturulması planlanıyor.
 
