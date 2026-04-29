@@ -4,7 +4,7 @@
 
 Bu proje, bir baskı devre kartı (PCB) üzerindeki bileşenlerin (direnç, kapasitör, entegre vb.) en kısa ve en verimli şekilde birbirine bağlanmasını sağlayan bir simülasyon sistemidir. Proje, mikroservis mimarisi kullanılarak asenkron ve ölçeklenebilir bir yapıda tasarlanmıştır.
 
-## 🚀 Proje Durumu: Ara Rapor Aşaması (30.03.2026)
+## 🚀 Proje Durumu: Ara Rapor Aşaması
 Projemiz, ekip üyelerinin ortak teknik tartışmalarını yürüttüğü, görev dağılımının netleştiği ve aktif versiyon kontrolü (Git) süreçlerinin başlatıldığı seviyeye ulaşmıştır.
 
 ## 📈 Git Akış Şeması (Workflow)
