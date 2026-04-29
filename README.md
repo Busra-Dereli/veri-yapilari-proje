@@ -1,7 +1,4 @@
 # Veri Yapıları Projesi
-<<<<<<< HEAD
-
-=======
 
 # PCB Bağlantı Ağı Optimizasyon Simülasyonu
 
@@ -21,4 +18,3 @@ Proje süreci, ara rapor dökümanındaki rehbere tam uyumlu şekilde GitHub üz
 * **[ISSUE #2]** Minumum yol-maliyet hesaplama için "Prim Algoritması"nı seçtik bundan dolayı da Min-Heap veri yapısı kullanılmasına karar verilmişir.
 * **[ISSUE #3]** Dinamik güncelleme için 20-100 düğüm aralığında performans test senaryoları oluşturulması planlanıyor.
 
->>>>>>> 5d021f047f662348c03fff71d8184a8524399406
