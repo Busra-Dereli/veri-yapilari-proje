@@ -11,7 +11,7 @@ Projemiz, ekip üyelerinin ortak teknik tartışmalarını yürüttüğü, göre
 ## 🧠 Algoritma ve Optimizasyon Altyapısı
 Projenin kalbini oluşturan bağlantı maliyeti optimizasyonu, hazır kütüphanelerden tamamen bağımsız, özelleştirilmiş algoritmik yapılarla inşa edilmektedir. Bu kapsamda:
 * **Özelleştirilmiş Veri Yapıları:** Arama ve minimum maliyetli kenar seçimi operasyonlarını logaritmik sürede gerçekleştirebilmek için **Min-Heap (Priority Queue)** yapısı sıfırdan tasarlanıp kodlanmaktadır.
-* **MST İnşası ve Analiz:** Ağ üzerindeki düğümleri döngüye yer vermeden (cycle-free) en düşük maliyetle bağlamak için **Prim Algoritması** kullanılmaktadır. Geliştirilen bu çekirdek yapının Zaman (Time) ve Uzay (Space) karmaşıklıkları matematiksel olarak analiz edilip projenin ilerleyen fazlarında raporlanacaktır.
+* **MST İnşası ve Analiz:** Ağ üzerindeki düğümleri döngüye yer vermeden (cycle-free) en düşük maliyetle bağlamak için **Prim Algoritması** kullanılmaktadır. Geliştirilen bu çekirdek yapının Zaman (Time) ve Uzay (Space) karmaşıklıkları matematiksel olarak analiz edilip projenin ilerleyen fazlarında raporlanacaktır..
 
 ## 🎨 Arayüz ve Kullanıcı Deneyimi (UI/UX)
 * **Teknoloji:** WinForms & GDI+ (Düşük gecikmeli grafik renderlama)
