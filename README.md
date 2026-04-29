@@ -23,3 +23,8 @@ Projenin kalbini oluşturan bağlantı maliyeti optimizasyonu, hazır kütüphan
 * **Özelleştirilmiş Veri Yapıları:** Arama ve minimum maliyetli kenar seçimi operasyonlarını logaritmik sürede gerçekleştirebilmek için **Min-Heap (Priority Queue)** yapısı sıfırdan tasarlanıp kodlanmaktadır.
 * **MST İnşası ve Analiz:** Ağ üzerindeki düğümleri döngüye yer vermeden (cycle-free) en düşük maliyetle bağlamak için **Prim Algoritması** kullanılmaktadır. Geliştirilen bu çekirdek yapının Zaman (Time) ve Uzay (Space) karmaşıklıkları matematiksel olarak analiz edilip projenin ilerleyen fazlarında raporlanacaktır.
 
+## 🎨 Arayüz ve Kullanıcı Deneyimi (UI/UX)
+* **Teknoloji:** WinForms & GDI+ (Düşük gecikmeli grafik renderlama)
+* **Görselleştirme:** Komşuluk Listesi (Adjacency List) verilerinin dinamik düğüm koordinatları ile eşlenmesi
+* **Etkileşim:** Mouse-event tabanlı düğüm sürükleme ve anlık bağlantı yolu güncelleme altyapısı
+

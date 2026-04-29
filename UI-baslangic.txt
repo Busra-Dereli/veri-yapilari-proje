@@ -1,0 +1,18 @@
+Faz 1: Kullanıcı Etkileşimi ve Dinamik Graf Görselleştirme Altyapısı
+Projenin vitrini olacak olan grafiksel arayüzün (GUI) kullanıcı dostu ve dinamik bir yapıda olması için çalışmalara başlanmıştır. C# WinForms platformu üzerinden System.Drawing kütüphanesi kullanılarak, düşük gecikmeli bir çizim motoru iskeleti tasarlanmaktadır.
+
+Mevcut Durum ve Alınan Kararlar:
+
+Teknoloji Seçimi: Hızlı prototipleme ve piksel bazlı çizim hassasiyeti (GDI+) avantajları nedeniyle WinForms mimarisi tercih edilmiştir. Bu yapı, karmaşık graf verilerinin ekranda titreme (flickering) yapmadan sunulmasını sağlayacaktır.
+
+Dinamik Düğüm Yönetimi: Kullanıcının çalışma alanına (canvas) mouse ile tıkladığı koordinatlarda düğüm (node) oluşturabilmesi için MouseDown ve Paint eventleri üzerinden bir tetikleme mekanizması kurulmaktadır.
+
+Graf Entegrasyon Hazırlığı: Arka planda geliştirilen "Komşuluk Listesi" verilerinin, ekrandaki koordinatlarla (X, Y) eşleştirilerek çizgisel bağlantılara (edge) dönüştürülmesi için gerekli veri köprüsü modelleri oluşturulmaktadır.
+
+MST Görselleştirme Planı: Prim algoritmasından gelecek olan "seçili kenar" verilerinin, ana graftan ayırt edilebilmesi için farklı renk (vurgulama) ve animasyon katmanları planlanmıştır.
+
+Sonraki Adımlar:
+
+Grafik çizim alanının (Panel/Canvas) Invalidate() metoduyla performanslı şekilde yenilenmesinin sağlanması.
+
+Oluşturulan WinForms projesinin, arayuz-sorumlusu dalı üzerinden ana projeye (master/main) entegrasyonu için Pull Request hazırlanması.
