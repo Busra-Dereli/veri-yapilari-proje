@@ -1,6 +1,13 @@
 # Veri Yapıları Projesi
 
-Faz 1: Temel Veri Yapıları ve Graf Altyapısı:
+# PCB Bağlantı Ağı Optimizasyon Simülasyonu
+
+Bu proje, bir baskı devre kartı (PCB) üzerindeki bileşenlerin (direnç, kapasitör, entegre vb.) en kısa ve en verimli şekilde birbirine bağlanmasını sağlayan bir simülasyon sistemidir. Proje, mikroservis mimarisi kullanılarak asenkron ve ölçeklenebilir bir yapıda tasarlanmıştır.
+
+## 🚀 Proje Durumu: Ara Rapor Aşaması
+Projemiz, ekip üyelerinin ortak teknik tartışmalarını yürüttüğü, görev dağılımının netleştiği ve aktif versiyon kontrolü (Git) süreçlerinin başlatıldığı seviyeye ulaşmıştır.
+
+## ⚙️ Temel Veri Yapıları ve Graf Altyapısı:
 
 Projenin çekirdek mimarisini oluşturacak olan temel veri yapıları üzerinde çalışmalara başlanmıştır. Standart kütüphaneler kullanılmadan, sistemin bellekte verimli çalışmasını sağlayacak sınıfların (class) iskeletleri araştırılıp oluşturulmaktadır.
 
@@ -13,14 +20,6 @@ Dolaşım Yapıları: Graf üzerindeki erişilebilirlik kontrollerini yapabilmek
 Algoritmik Altyapı: Başlangıç düğüm bağlantılarının doğrulanması için DFS (Depth-First Search) ve BFS (Breadth-First Search) algoritmalarının pseudo-kodları çıkarılmış, sisteme entegrasyonu için ön hazırlıklar tamamlanmıştır.
 
 Sonraki Adımlar: Node ve Edge sınıflarının kodlanması ve bu yapıların GitHub üzerinden kendi dalımdan (branch) ana dala (master) aktarılması (Pull Request).
-
-
-# PCB Bağlantı Ağı Optimizasyon Simülasyonu
-
-Bu proje, bir baskı devre kartı (PCB) üzerindeki bileşenlerin (direnç, kapasitör, entegre vb.) en kısa ve en verimli şekilde birbirine bağlanmasını sağlayan bir simülasyon sistemidir. Proje, mikroservis mimarisi kullanılarak asenkron ve ölçeklenebilir bir yapıda tasarlanmıştır.
-
-## 🚀 Proje Durumu: Ara Rapor Aşaması
-Projemiz, ekip üyelerinin ortak teknik tartışmalarını yürüttüğü, görev dağılımının netleştiği ve aktif versiyon kontrolü (Git) süreçlerinin başlatıldığı seviyeye ulaşmıştır.
 
 ## 🧠 Algoritma ve Optimizasyon Altyapısı
 Projenin kalbini oluşturan bağlantı maliyeti optimizasyonu, hazır kütüphanelerden tamamen bağımsız, özelleştirilmiş algoritmik yapılarla inşa edilmektedir. Bu kapsamda:
