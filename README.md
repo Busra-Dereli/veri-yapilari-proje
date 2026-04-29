@@ -1,5 +1,6 @@
 # Veri Yapıları Projesi
 
+
 # PCB Bağlantı Ağı Optimizasyon Simülasyonu
 
 Bu proje, bir baskı devre kartı (PCB) üzerindeki bileşenlerin (direnç, kapasitör, entegre vb.) en kısa ve en verimli şekilde birbirine bağlanmasını sağlayan bir simülasyon sistemidir. Proje, mikroservis mimarisi kullanılarak asenkron ve ölçeklenebilir bir yapıda tasarlanmıştır.
