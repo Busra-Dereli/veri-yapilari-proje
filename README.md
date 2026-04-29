@@ -7,6 +7,11 @@ Bu proje, bir baskı devre kartı (PCB) üzerindeki bileşenlerin (direnç, kapa
 ## 🚀 Proje Durumu: Ara Rapor Aşaması
 Projemiz, ekip üyelerinin ortak teknik tartışmalarını yürüttüğü, görev dağılımının netleştiği ve aktif versiyon kontrolü (Git) süreçlerinin başlatıldığı seviyeye ulaşmıştır.
 
+## 🎨 Arayüz ve Kullanıcı Deneyimi (UI/UX)
+* **Teknoloji:** WinForms & GDI+ (Düşük gecikmeli grafik renderlama)
+* **Görselleştirme:** Komşuluk Listesi (Adjacency List) verilerinin dinamik düğüm koordinatları ile eşlenmesi
+* **Etkileşim:** Mouse-event tabanlı düğüm sürükleme ve anlık bağlantı yolu güncelleme altyapısı
+
 ## 📈 Git Akış Şeması (Workflow)
 Proje süreci, ara rapor dökümanındaki rehbere tam uyumlu şekilde GitHub üzerinden yönetilmektedir:
 * **Issue Tracking:** Her teknik zorluk ve özellik (feature) bir "Issue" olarak açılır ve ekip içinde tartışılır.
@@ -17,8 +22,3 @@ Proje süreci, ara rapor dökümanındaki rehbere tam uyumlu şekilde GitHub üz
 * **[ISSUE #1]** Veri yapısı olarak bellek verimliliği için "Adjacency List" (Komşuluk Listesi) kullanımı kararlaştırıldı.
 * **[ISSUE #2]** Minumum yol-maliyet hesaplama için "Prim Algoritması"nı seçtik bundan dolayı da Min-Heap veri yapısı kullanılmasına karar verilmişir.
 * **[ISSUE #3]** Dinamik güncelleme için 20-100 düğüm aralığında performans test senaryoları oluşturulması planlanıyor.
-
-## 🎨 Arayüz ve Kullanıcı Deneyimi (UI/UX)
-* **Teknoloji:** WinForms & GDI+ (Düşük gecikmeli grafik renderlama)
-* **Görselleştirme:** Komşuluk Listesi (Adjacency List) verilerinin dinamik düğüm koordinatları ile eşlenmesi
-* **Etkileşim:** Mouse-event tabanlı düğüm sürükleme ve anlık bağlantı yolu güncelleme altyapısı
