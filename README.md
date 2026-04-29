@@ -18,3 +18,7 @@ Proje süreci, ara rapor dökümanındaki rehbere tam uyumlu şekilde GitHub üz
 * **[ISSUE #2]** Minumum yol-maliyet hesaplama için "Prim Algoritması"nı seçtik bundan dolayı da Min-Heap veri yapısı kullanılmasına karar verilmişir.
 * **[ISSUE #3]** Dinamik güncelleme için 20-100 düğüm aralığında performans test senaryoları oluşturulması planlanıyor.
 
+## 🎨 Arayüz ve Kullanıcı Deneyimi (UI/UX)
+* **Teknoloji:** WinForms & GDI+ (Düşük gecikmeli grafik renderlama)
+* **Görselleştirme:** Komşuluk Listesi (Adjacency List) verilerinin dinamik düğüm koordinatları ile eşlenmesi
+* **Etkileşim:** Mouse-event tabanlı düğüm sürükleme ve anlık bağlantı yolu güncelleme altyapısı
