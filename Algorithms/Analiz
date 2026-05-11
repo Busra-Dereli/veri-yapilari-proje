@@ -1,0 +1,48 @@
+================================================================================
+Veri Yapıları ve Algoritmalar Projesi: PCB Bağlantı Optimizasyonu
+================================================================================
+
+1. ZAMAN KARMAŞIKLIĞI ANALİZİ (TIME COMPLEXITY)
+-----------------------------------------------
+Prim Algoritmasının toplam zaman karmaşıklığı, kullanılan veri yapısına doğrudan 
+bağlıdır. Yapılan implementasyon üzerinden analiz şu şekildedir:
+
+- Değişken Tanımları:
+  V: Graf üzerindeki toplam düğüm (bileşen) sayısı.
+  E: Graf üzerindeki toplam kenar (olası bağlantı) sayısı.
+
+- Min-Heap Operasyonları:
+  Sıfırdan yazılan Min-Heap yapısında bir elemanın eklenmesi (Insert) ve en düşük 
+  maliyetli elemanın çıkarılması (ExtractMin) işlemleri, ikili ağaç yüksekliğine 
+  bağlı olarak O(log V) karmaşıklığa sahiptir.
+
+- Toplam Süreç:
+  1. Algoritma, graf üzerindeki her bir kenarı (E) en fazla bir kez değerlendirir.
+  2. Her bir kenar için en kötü senaryoda Min-Heap üzerinde bir ekleme veya 
+     çıkarma işlemi gerçekleştirilir (O(log V)).
+  
+Sonuç: Algoritmanın toplam zaman karmaşıklığı matematiksel olarak O(E log V) 
+olarak ispatlanmıştır. Bu karmaşıklık düzeyi, yüksek yoğunluklu PCB tasarımları 
+için yüksek performans ve ölçeklenebilirlik sunmaktadır.
+
+2. UZAY KARMAŞIKLIĞI ANALİZİ (SPACE COMPLEXITY)
+-----------------------------------------------
+Algoritmanın çalışma esnasında bellek (RAM) üzerindeki kullanımı şu şekildedir:
+
+- Adjacency List (Komşuluk Listesi): Düğümleri ve kenarları tutmak için O(V + E) 
+  alan kaplar.
+- Min-Heap Yapısı: En kötü durumda tüm kenarları tutabileceği için O(E) alan kaplar.
+- Visited Set (Ziyaret Edilenler): Her düğümü bir kez işaretlediği için O(V) 
+  alan kaplar.
+
+Sonuç: Toplam uzay karmaşıklığı O(V + E) seviyesindedir. Bellek kullanımı verimlidir 
+ve sistem kaynaklarını optimize eder.
+
+3. MÜHENDİSLİK DEĞERLENDİRMESİ
+------------------------------
+Yazılan Prim Algoritması ve Min-Heap yapısı, projenin temel hedefi olan Minimum 
+Spanning Tree (MST) eldesini garantilemektedir. Implementasyon, döngü (cycle) 
+oluşumunu HashSet tabanlı kontrol mekanizması ile engelleyerek PCB üzerinde 
+elektriksel kısa devre riskini ortadan kaldıracak şekilde tasarlanmıştır.
+
+================================================================================
