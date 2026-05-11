@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System;
  
-    public class Edge
+    public class Edge2
 {
     public int Source {get ; set;}
     public int Destination {get ; set;}

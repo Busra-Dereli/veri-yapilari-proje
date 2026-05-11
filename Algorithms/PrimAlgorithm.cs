@@ -1,37 +1,60 @@
 using System.Collections.Generic;
 
-public class PrimAlgorithm
+namespace PCBBaglantiAgiOptimizasyonu
 {
-    public List<Edge> Run(int startNode, Dictionary<int, List<Edge>> adjacencyList)
+    public class PrimAlgorithm
     {
-        List<Edge> mstEdges =new List<Edge>();
-
-        HashSet<int> visited = new HashSet<int>();
-
-        MinHeap minHeap = new MinHeap();
-        visited.Add(startNode);
-        foreach(var kenar in adjacencyList[startNode])
+      
+        public List<Edge> Run(Node startNode, Graph pcbGraph)
         {
-            minHeap.Insert(kenar);
-        }
-        while (visited.Count < adjacencyList.Count)
-        {
-            Edge currentEdge=minHeap.ExtractMin();
-            if(currentEdge==null) break;
-            if (visited.Contains(currentEdge.Destination))
+            List<Edge> mstEdges = new List<Edge>();
+            MinHeap minHeap = new MinHeap();
+            
+         
+            int visitedCount = 0; 
+            
+            startNode.IsVisited = true;
+            visitedCount++;
+
+        
+            Edge currentAdj = startNode.HeadEdge;
+            while (currentAdj != null)
             {
-                continue;
+                minHeap.Insert(currentAdj);
+                currentAdj = currentAdj.Next; 
             }
-            mstEdges.Add(currentEdge);
-            visited.Add(currentEdge.Destination);
-            foreach(var kenarlar in adjacencyList[currentEdge.Destination])
+
+           
+            while (visitedCount < pcbGraph.ComponentCount)
             {
-                if (!visited.Contains(kenarlar.Desination))
+                Edge currentEdge = minHeap.ExtractMin();
+                if(currentEdge == null) break;
+
+               
+                if (currentEdge.Destination.IsVisited)
                 {
-                    minHeap.Insert(kenarlar);
+                    continue;
+                }
+
+              
+                mstEdges.Add(currentEdge);
+                currentEdge.Destination.IsVisited = true;
+                visitedCount++;
+
+             
+                Edge nextAdj = currentEdge.Destination.HeadEdge;
+                while (nextAdj != null)
+                {
+                   
+                    if (!nextAdj.Destination.IsVisited)
+                    {
+                        minHeap.Insert(nextAdj);
+                    }
+                    nextAdj = nextAdj.Next; 
                 }
             }
+            
+            return mstEdges;
         }
-        return mstEdges;
     }
 }
