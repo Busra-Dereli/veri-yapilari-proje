@@ -1,6 +1,3 @@
-// Proje Ekibi:
-// Busra Dereli
-
 namespace PCBBaglantiAgiOptimizasyonu
 {
     internal static class Program
