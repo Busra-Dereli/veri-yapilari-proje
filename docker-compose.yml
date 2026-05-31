@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  pcb-build:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build
+    image: pcb-baglanti-agi:latest
+    container_name: pcb-baglanti-agi-build
+    volumes:
+      - ./publish:/app/publish
+    command: >
+      sh -c "dotnet publish ./PCBBaglantiAgiOptimizasyonu/PCBBaglantiAgiOptimizasyonu.csproj
+      -c Release -r win-x64 --self-contained true -o /app/publish
+      && echo Build tamamlandi. Cikti: publish/ klasoru"
+
