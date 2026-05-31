@@ -1,14 +1,28 @@
-using System.Collections.Generic;
+// Proje Ekibi:
+// Busra Dereli
 
 namespace PCBBaglantiAgiOptimizasyonu
 {
     public class MinHeap
     {
-        private List<Edge> heapList;
-        
-        public MinHeap()
+        private Edge[] heapArray;
+        private int size;
+        private int capacity;
+
+        public MinHeap(int capacity = 1000)
         {
-            heapList = new List<Edge>();  
+            this.capacity = capacity;
+            this.heapArray = new Edge[this.capacity];
+            this.size = 0;
+        }
+
+        private void Resize()
+        {
+            capacity *= 2;
+            Edge[] newArray = new Edge[capacity];
+            for (int i = 0; i < size; i++)
+                newArray[i] = heapArray[i];
+            heapArray = newArray;
         }
 
         private int GetLeftChildIndex(int index) { return index * 2 + 1; }
@@ -17,18 +31,20 @@ namespace PCBBaglantiAgiOptimizasyonu
 
         public void Insert(Edge newEdge)
         {
-            heapList.Add(newEdge);
-            HeapifyUp(heapList.Count - 1);
+            if (size == capacity) Resize();
+            heapArray[size] = newEdge;
+            HeapifyUp(size);
+            size++;
         }
 
         private void HeapifyUp(int currentIndex)
         {
             int parentIndex = GetParentIndex(currentIndex);
-            while(currentIndex > 0 && heapList[currentIndex].Weight < heapList[parentIndex].Weight)
+            while (currentIndex > 0 && heapArray[currentIndex].Weight < heapArray[parentIndex].Weight)
             {
-                Edge temp = heapList[currentIndex];
-                heapList[currentIndex] = heapList[parentIndex];
-                heapList[parentIndex] = temp;
+                Edge temp = heapArray[currentIndex];
+                heapArray[currentIndex] = heapArray[parentIndex];
+                heapArray[parentIndex] = temp;
                 currentIndex = parentIndex;
                 parentIndex = GetParentIndex(currentIndex);
             }
@@ -36,13 +52,14 @@ namespace PCBBaglantiAgiOptimizasyonu
 
         public Edge ExtractMin()
         {
-            if(heapList.Count == 0) return null;
-            
-            Edge minEdge = heapList[0];
-            heapList[0] = heapList[heapList.Count - 1];
-            heapList.RemoveAt(heapList.Count - 1);
+            if (size == 0) return null;
+
+            Edge minEdge = heapArray[0];
+            heapArray[0] = heapArray[size - 1];
+            heapArray[size - 1] = null;
+            size--;
             HeapifyDown(0);
-            
+
             return minEdge;
         }
 
@@ -54,12 +71,11 @@ namespace PCBBaglantiAgiOptimizasyonu
                 int rightChildIndex = GetRightChildIndex(currentIndex);
                 int smallestIndex = currentIndex;
 
-                
-                if(leftChildIndex < heapList.Count && heapList[leftChildIndex].Weight < heapList[smallestIndex].Weight)
+                if (leftChildIndex < size && heapArray[leftChildIndex].Weight < heapArray[smallestIndex].Weight)
                 {
                     smallestIndex = leftChildIndex;
-                }    
-                if(rightChildIndex < heapList.Count && heapList[rightChildIndex].Weight < heapList[smallestIndex].Weight)
+                }
+                if (rightChildIndex < size && heapArray[rightChildIndex].Weight < heapArray[smallestIndex].Weight)
                 {
                     smallestIndex = rightChildIndex;
                 }
@@ -67,11 +83,11 @@ namespace PCBBaglantiAgiOptimizasyonu
                 {
                     break;
                 }
-                
-                Edge temp = heapList[currentIndex];
-                heapList[currentIndex] = heapList[smallestIndex];
-                heapList[smallestIndex] = temp;
-                currentIndex = smallestIndex; 
+
+                Edge temp = heapArray[currentIndex];
+                heapArray[currentIndex] = heapArray[smallestIndex];
+                heapArray[smallestIndex] = temp;
+                currentIndex = smallestIndex;
             }
         }
     }
