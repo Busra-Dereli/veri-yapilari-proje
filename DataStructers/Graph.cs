@@ -1,3 +1,6 @@
+// Proje Ekibi:
+// Busra Dereli
+
 namespace PCBBaglantiAgiOptimizasyonu
 {
     public class Graph 
