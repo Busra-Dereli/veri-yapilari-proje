@@ -1,5 +1,9 @@
 // Proje Ekibi:
-// Busra Dereli
+// KAAN ORHAN 
+// NUMAN KARABUGA 
+// AHMET DEMIRBILEK 
+// BUSRA DERELI
+
 
 namespace PCBBaglantiAgiOptimizasyonu
 {
