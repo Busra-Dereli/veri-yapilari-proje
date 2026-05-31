@@ -175,7 +175,7 @@ namespace PCBBaglantiAgiOptimizasyonu
             this.Controls.Add(canvasPanel);
             this.Controls.Add(controlPanel);
 
-            btnGenerate.Click += (s, e) => GenerateRandomGraph(new Random().Next(14, 28));
+            btnGenerate.Click += (s, e) => GenerateRandomGraph(new Random().Next(20, 101));
             btnRunPrim.Click += BtnRunPrim_Click;
             btnReset.Click += (s, e) => ResetAll();
             btnBFS.Click += (s, e) => StartTraversal("BFS");
