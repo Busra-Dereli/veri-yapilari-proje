@@ -1,15 +1,17 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using PCBBaglantiAgiOptimizasyonu;
 
+// Proje Ekibi:
+// Busra Dereli
+
 namespace PCBBaglantiAgiOptimizasyonu
 {
     public partial class Form1 : Form
     {
-        // --- RENK PALETİ ---
+        // --- RENK PALETi ---
         static readonly Color BG_DARK = Color.FromArgb(242, 242, 247);
         static readonly Color BG_PANEL = Color.FromArgb(255, 255, 255);
         static readonly Color ACCENT = Color.FromArgb(52, 199, 89);
@@ -22,15 +24,16 @@ namespace PCBBaglantiAgiOptimizasyonu
         static readonly Color TEXT_PRIMARY = Color.FromArgb(28, 28, 30);
         static readonly Color TEXT_DIM = Color.FromArgb(142, 142, 147);
 
-        // --- VERİ ---
+        // --- VERi ---
         private Graph pcbGraph = new Graph(200);
-        private List<Edge> mstEdges = new List<Edge>();
-        private List<Edge> animationEdges = new List<Edge>();
+        private Edge[] mstEdges = new Edge[0];
+        private Edge[] animationEdges = new Edge[0];
+        private int mstCount = 0;
         private int animationStep = 0;
         private System.Windows.Forms.Timer animationTimer = new System.Windows.Forms.Timer();
-        private Dictionary<string, PointF> nodePositions = new Dictionary<string, PointF>();
+        private System.Collections.Generic.Dictionary<string, PointF> nodePositions = new System.Collections.Generic.Dictionary<string, PointF>();
 
-        // --- UI ELEMANLARı ---
+        // --- UI ELEMANLARi ---
         private Panel canvasPanel = new Panel();
         private Panel controlPanel = new Panel();
         private Button btnGenerate = new Button();
@@ -41,7 +44,7 @@ namespace PCBBaglantiAgiOptimizasyonu
         private Label lblCost = new Label();
         private Label lblStatus = new Label();
 
-        private List<Node> traversalOrder = new List<Node>();
+        private System.Collections.Generic.List<Node> traversalOrder = new System.Collections.Generic.List<Node>();
         private int traversalStep = 0;
         private System.Windows.Forms.Timer traversalTimer = new System.Windows.Forms.Timer();
         private string traversalMode = "";
@@ -63,19 +66,17 @@ namespace PCBBaglantiAgiOptimizasyonu
         // ─────────────────────────────────────────
         private void BuildUI()
         {
-            this.Text = "PCB Bağlantı Ağı — Prim MST";
+            this.Text = "PCB Baglanti Agi — Prim MST";
             this.Size = new Size(1280, 780);
             this.MinimumSize = new Size(960, 620);
             this.BackColor = BG_DARK;
             this.StartPosition = FormStartPosition.CenterScreen;
 
-            // ── SOL PANEL ──────────────────────────
             controlPanel.Dock = DockStyle.Left;
             controlPanel.Width = 210;
             controlPanel.BackColor = BG_PANEL;
             controlPanel.Padding = new Padding(0);
 
-            // İnce sağ kenarlık
             controlPanel.Paint += (s, e) =>
             {
                 e.Graphics.DrawLine(new Pen(Color.FromArgb(35, 35, 42), 1),
@@ -85,15 +86,13 @@ namespace PCBBaglantiAgiOptimizasyonu
 
             int y = 36;
 
-            // Başlık
             AddLabel(controlPanel, "PCB", ref y, 13, FontStyle.Bold, TEXT_PRIMARY, 0);
-            AddLabel(controlPanel, "Bağlantı Ağı Optimizasyonu", ref y, 8, FontStyle.Regular, TEXT_DIM, 4);
+            AddLabel(controlPanel, "Baglanti Agi Optimizasyonu", ref y, 8, FontStyle.Regular, TEXT_DIM, 4);
             AddSeparator(controlPanel, ref y, 24);
 
-            // Butonlar
-            btnGenerate = AddButton(controlPanel, "Yeni Graf Üret", ref y);
-            btnRunPrim = AddButton(controlPanel, "Prim Algoritması", ref y);
-            btnReset = AddButton(controlPanel, "Sıfırla", ref y);
+            btnGenerate = AddButton(controlPanel, "Yeni Graf Urt", ref y);
+            btnRunPrim = AddButton(controlPanel, "Prim Algoritmasi", ref y);
+            btnReset = AddButton(controlPanel, "Sifirla", ref y);
 
             btnRunPrim.BackColor = Color.FromArgb(242, 242, 247);
             btnRunPrim.ForeColor = Color.FromArgb(52, 199, 89);
@@ -104,15 +103,14 @@ namespace PCBBaglantiAgiOptimizasyonu
 
             AddSeparator(controlPanel, ref y, 24);
 
-            // İstatistikler
-            AddLabel(controlPanel, "GRAF BİLGİSİ", ref y, 7, FontStyle.Bold, TEXT_DIM, 0);
+            AddLabel(controlPanel, "GRAF BiLGiSi", ref y, 7, FontStyle.Bold, TEXT_DIM, 0);
             y += 6;
-            lblNodeCount = AddInfoRow(controlPanel, "Düğüm", "—", ref y);
+            lblNodeCount = AddInfoRow(controlPanel, "Dugum", "—", ref y);
             lblEdgeCount = AddInfoRow(controlPanel, "Kenar", "—", ref y);
 
             AddSeparator(controlPanel, ref y, 20);
 
-            AddLabel(controlPanel, "MST MALİYETİ", ref y, 7, FontStyle.Bold, TEXT_DIM, 0);
+            AddLabel(controlPanel, "MST MALiYETi", ref y, 7, FontStyle.Bold, TEXT_DIM, 0);
             y += 6;
             lblCost = new Label
             {
@@ -131,10 +129,10 @@ namespace PCBBaglantiAgiOptimizasyonu
 
             AddSeparator(controlPanel, ref y, 20);
 
-            AddLabel(controlPanel, "DOLAŞIM", ref y, 7, FontStyle.Bold, TEXT_DIM, 0);
+            AddLabel(controlPanel, "DOLASIM", ref y, 7, FontStyle.Bold, TEXT_DIM, 0);
             y += 6;
-            btnBFS = AddButton(controlPanel, "BFS Göster", ref y);
-            btnDFS = AddButton(controlPanel, "DFS Göster", ref y);
+            btnBFS = AddButton(controlPanel, "BFS Goster", ref y);
+            btnDFS = AddButton(controlPanel, "DFS Goster", ref y);
             btnBFS.ForeColor = Color.FromArgb(255, 149, 0);
             btnBFS.FlatAppearance.BorderColor = Color.FromArgb(255, 149, 0);
             btnDFS.ForeColor = Color.FromArgb(175, 82, 222);
@@ -142,20 +140,18 @@ namespace PCBBaglantiAgiOptimizasyonu
 
             AddSeparator(controlPanel, ref y, 20);
 
-            // Lejant
-            AddLabel(controlPanel, "GÖSTERIM", ref y, 7, FontStyle.Bold, TEXT_DIM, 0);
+            AddLabel(controlPanel, "GOSTERiM", ref y, 7, FontStyle.Bold, TEXT_DIM, 0);
             y += 8;
-            AddLegendRow(controlPanel, EDGE_IDLE, "Olası bağlantı", ref y);
-            AddLegendRow(controlPanel, EDGE_MST, "MST kenarı", ref y);
-            AddLegendRow(controlPanel, NODE_START, "Başlangıç düğümü", ref y);
-            AddLegendRow(controlPanel, NODE_DEFAULT, "Bileşen", ref y);
+            AddLegendRow(controlPanel, EDGE_IDLE, "Olasibaglanti", ref y);
+            AddLegendRow(controlPanel, EDGE_MST, "MST kenari", ref y);
+            AddLegendRow(controlPanel, NODE_START, "Baslangic dugumu", ref y);
+            AddLegendRow(controlPanel, NODE_DEFAULT, "Bilesen", ref y);
 
             AddSeparator(controlPanel, ref y, 20);
 
-            // Durum etiketi
             lblStatus = new Label
             {
-                Text = "Canvas'a tıklayarak yeni düğüm ekleyebilirsiniz.",
+                Text = "Canvas a tiklayarak yeni dugum ekleyebilirsiniz.",
                 Font = new Font("Segoe UI", 7, FontStyle.Regular),
                 ForeColor = TEXT_DIM,
                 AutoSize = false,
@@ -166,7 +162,6 @@ namespace PCBBaglantiAgiOptimizasyonu
             };
             controlPanel.Controls.Add(lblStatus);
 
-            // ── CANVAS ────────────────────────────
             canvasPanel.Dock = DockStyle.Fill;
             canvasPanel.BackColor = BG_DARK;
             canvasPanel.Cursor = Cursors.Cross;
@@ -174,7 +169,6 @@ namespace PCBBaglantiAgiOptimizasyonu
             canvasPanel.MouseClick += CanvasPanel_MouseClick;
             canvasPanel.MouseMove += CanvasPanel_MouseMove;
 
-            // Double buffering — yanıp sönmeyi engeller
             typeof(Panel).GetProperty("DoubleBuffered",
                 System.Reflection.BindingFlags.NonPublic |
                 System.Reflection.BindingFlags.Instance)!
@@ -183,7 +177,6 @@ namespace PCBBaglantiAgiOptimizasyonu
             this.Controls.Add(canvasPanel);
             this.Controls.Add(controlPanel);
 
-            // Buton eventleri
             btnGenerate.Click += (s, e) => GenerateRandomGraph(new Random().Next(14, 28));
             btnRunPrim.Click += BtnRunPrim_Click;
             btnReset.Click += (s, e) => ResetAll();
@@ -191,7 +184,6 @@ namespace PCBBaglantiAgiOptimizasyonu
             btnDFS.Click += (s, e) => StartTraversal("DFS");
         }
 
-        // ─── Yardımcı UI builder metodları ───────
         private void AddLabel(Panel p, string text, ref int y, float size,
                               FontStyle style, Color color, int extraY)
         {
@@ -316,19 +308,26 @@ namespace PCBBaglantiAgiOptimizasyonu
             animationTimer.Interval = 800;
             animationTimer.Tick += (s, e) =>
             {
-                if (animationStep < animationEdges.Count)
+                if (animationStep < animationEdges.Length && animationEdges[animationStep] != null)
                 {
-                    mstEdges.Add(animationEdges[animationStep]);
+                    // mstEdges dizisine ekle
+                    if (mstCount >= mstEdges.Length)
+                    {
+                        Edge[] bigger = new Edge[mstEdges.Length * 2 + 1];
+                        for (int i = 0; i < mstCount; i++) bigger[i] = mstEdges[i];
+                        mstEdges = bigger;
+                    }
+                    mstEdges[mstCount++] = animationEdges[animationStep];
                     animationStep++;
                     canvasPanel.Invalidate();
-                    lblStatus.Text = $"Adım {animationStep} / {animationEdges.Count}";
+                    lblStatus.Text = $"Adim {animationStep} / {animationEdges.Length}";
                 }
                 else
                 {
                     animationTimer.Stop();
                     btnRunPrim.Enabled = true;
                     UpdateCostLabel();
-                    lblStatus.Text = "MST tamamlandı.";
+                    lblStatus.Text = "MST tamamlandi.";
                 }
             };
 
@@ -340,16 +339,37 @@ namespace PCBBaglantiAgiOptimizasyonu
                     traversalStep++;
                     string path = "";
                     for (int i = 0; i < traversalStep; i++)
-                        path += (i == 0 ? "" : " → ") + traversalOrder[i].Id;
+                        path += (i == 0 ? "" : " -> ") + traversalOrder[i].Id;
                     lblStatus.Text = path;
                     canvasPanel.Invalidate();
                 }
                 else
                 {
                     traversalTimer.Stop();
-                    lblStatus.Text = lblStatus.Text + "\n\n✓ " + traversalMode + " tamamlandı.";
+                    lblStatus.Text = lblStatus.Text + "
+
+✓ " + traversalMode + " tamamlandi.";
                 }
             };
+        }
+
+        // ─────────────────────────────────────────
+        // BAGLANTILiLIK KONTROLu
+        // ─────────────────────────────────────────
+        private bool IsConnected()
+        {
+            if (pcbGraph.ComponentCount == 0) return true;
+            ResetVisited();
+            RunBFS(pcbGraph.Components[0]);
+            for (int i = 0; i < pcbGraph.ComponentCount; i++)
+                if (!pcbGraph.Components[i].IsVisited) return false;
+            return true;
+        }
+
+        private void ResetVisited()
+        {
+            for (int i = 0; i < pcbGraph.ComponentCount; i++)
+                pcbGraph.Components[i].IsVisited = false;
         }
 
         // ─────────────────────────────────────────
@@ -359,9 +379,7 @@ namespace PCBBaglantiAgiOptimizasyonu
         {
             if (pcbGraph.ComponentCount == 0) return;
 
-            for (int i = 0; i < pcbGraph.ComponentCount; i++)
-                pcbGraph.Components[i].IsVisited = false;
-
+            ResetVisited();
             traversalOrder.Clear();
             traversalStep = 0;
             traversalMode = mode;
@@ -372,10 +390,9 @@ namespace PCBBaglantiAgiOptimizasyonu
             else
                 RunDFS(pcbGraph.Components[0]);
 
-            for (int i = 0; i < pcbGraph.ComponentCount; i++)
-                pcbGraph.Components[i].IsVisited = false;
+            ResetVisited();
 
-            lblStatus.Text = $"{mode} başlatıldı...";
+            lblStatus.Text = $"{mode} baslatildi...";
             traversalTimer.Start();
         }
 
@@ -405,10 +422,10 @@ namespace PCBBaglantiAgiOptimizasyonu
 
         private void RunDFS(Node start)
         {
-            var stack = new Stack<Node>();
+            var stack = new CustomStack();
             stack.Push(start);
 
-            while (stack.Count > 0)
+            while (!stack.IsEmpty())
             {
                 var current = stack.Pop();
                 if (current.IsVisited) continue;
@@ -427,7 +444,7 @@ namespace PCBBaglantiAgiOptimizasyonu
         }
 
         // ─────────────────────────────────────────
-        // GRAF ÜRETME
+        // GRAF uRETME
         // ─────────────────────────────────────────
         private void GenerateRandomGraph(int nodeCount)
         {
@@ -464,21 +481,27 @@ namespace PCBBaglantiAgiOptimizasyonu
 
             UpdateStats();
             canvasPanel.Invalidate();
-            lblStatus.Text = "Graf hazır.";
+            lblStatus.Text = "Graf hazir.";
         }
 
         // ─────────────────────────────────────────
-        // PRİM
+        // PRiM
         // ─────────────────────────────────────────
         private void BtnRunPrim_Click(object sender, EventArgs e)
         {
             if (pcbGraph.ComponentCount == 0) return;
 
-            for (int i = 0; i < pcbGraph.ComponentCount; i++)
-                pcbGraph.Components[i].IsVisited = false;
+            // Baglantililik kontrolu
+            if (!IsConnected())
+            {
+                lblStatus.Text = "⚠ Graf bagli degil! Prim calistirilmiyor.";
+                return;
+            }
 
-            mstEdges.Clear();
-            animationEdges.Clear();
+            ResetVisited();
+
+            mstEdges = new Edge[0];
+            mstCount = 0;
             animationStep = 0;
             lblCost.Text = "—";
 
@@ -486,12 +509,12 @@ namespace PCBBaglantiAgiOptimizasyonu
             animationEdges = result;
 
             btnRunPrim.Enabled = false;
-            lblStatus.Text = "Hesaplanıyor...";
+            lblStatus.Text = "Hesaplaniyor...";
             animationTimer.Start();
         }
 
         // ─────────────────────────────────────────
-        // CANVAS ÇİZİM
+        // CANVAS CiZiM
         // ─────────────────────────────────────────
         private void CanvasPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -507,7 +530,7 @@ namespace PCBBaglantiAgiOptimizasyonu
         private void DrawIdleEdges(Graphics g)
         {
             var pen = new Pen(EDGE_IDLE, 1f);
-            var drawn = new HashSet<string>();
+            var drawn = new System.Collections.Generic.HashSet<string>();
 
             for (int i = 0; i < pcbGraph.ComponentCount; i++)
             {
@@ -536,9 +559,13 @@ namespace PCBBaglantiAgiOptimizasyonu
             var penThin = new Pen(Color.FromArgb(60, EDGE_MST), 4f);
             var penLine = new Pen(EDGE_MST, 1.2f);
 
-            foreach (var edge in mstEdges)
+            for (int i = 0; i < mstCount; i++)
             {
-                string? srcId = FindSourceId(edge);
+                var edge = mstEdges[i];
+                if (edge == null) continue;
+
+                // Source alani artik mevcut, FindSourceId gerekmez
+                string srcId = edge.Source != null ? edge.Source.Id : FindSourceId(edge);
                 if (srcId == null) continue;
                 if (!nodePositions.ContainsKey(srcId) ||
                     !nodePositions.ContainsKey(edge.Destination.Id)) continue;
@@ -549,7 +576,6 @@ namespace PCBBaglantiAgiOptimizasyonu
                 g.DrawLine(penThin, p1, p2);
                 g.DrawLine(penLine, p1, p2);
 
-                // Ağırlık etiketi — MST kenarı ortası
                 var mid = new PointF((p1.X + p2.X) / 2f, (p1.Y + p2.Y) / 2f);
                 var font = new Font("Segoe UI", 7f, FontStyle.Regular);
                 g.DrawString(edge.Weight.ToString(), font,
@@ -603,7 +629,7 @@ namespace PCBBaglantiAgiOptimizasyonu
         }
 
         // ─────────────────────────────────────────
-        // DÜĞÜM EKLEME
+        // DuGuM EKLEME
         // ─────────────────────────────────────────
         private void CanvasPanel_MouseClick(object sender, MouseEventArgs e)
         {
@@ -611,7 +637,7 @@ namespace PCBBaglantiAgiOptimizasyonu
 
             if (animationTimer.Enabled || traversalTimer.Enabled)
             {
-                lblStatus.Text = "⚠ Algoritma çalışırken düğüm eklenemez.";
+                lblStatus.Text = "⚠ Algoritma calisirken dugum eklenemez.";
                 return;
             }
 
@@ -668,13 +694,24 @@ namespace PCBBaglantiAgiOptimizasyonu
             var edge = n.HeadEdge;
             while (edge != null) { neighborCount++; edge = edge.Next; }
 
-            bool inMST = mstEdges.Exists(ed => ed.Destination.Id == hoveredId);
+            bool inMST = false;
+            for (int i = 0; i < mstCount; i++)
+            {
+                if (mstEdges[i] != null && mstEdges[i].Destination.Id == hoveredId)
+                {
+                    inMST = true;
+                    break;
+                }
+            }
             bool isStart = (pcbGraph.Components[0].Id == hoveredId);
 
-            string tip = $"{hoveredId}\n" +
-                         $"Komşu: {neighborCount}\n" +
-                         $"MST: {(inMST || isStart ? "✓ Evet" : "—")}\n" +
-                         $"Başlangıç: {(isStart ? "✓" : "—")}";
+            string tip = $"{hoveredId}
+" +
+                         $"Komsu: {neighborCount}
+" +
+                         $"MST: {(inMST || isStart ? "✓ Evet" : "—")}
+" +
+                         $"Baslangic: {(isStart ? "✓" : "—")}";
 
             nodeToolTip.Show(tip, canvasPanel, e.X + 12, e.Y - 10, 3000);
         }
@@ -688,8 +725,9 @@ namespace PCBBaglantiAgiOptimizasyonu
             traversalTimer.Stop();
             pcbGraph = new Graph(200);
             nodePositions.Clear();
-            mstEdges.Clear();
-            animationEdges.Clear();
+            mstEdges = new Edge[0];
+            mstCount = 0;
+            animationEdges = new Edge[0];
             traversalOrder.Clear();
             animationStep = 0;
             traversalStep = 0;
@@ -705,16 +743,16 @@ namespace PCBBaglantiAgiOptimizasyonu
         private void ResetMST()
         {
             animationTimer.Stop();
-            mstEdges.Clear();
-            animationEdges.Clear();
+            mstEdges = new Edge[0];
+            mstCount = 0;
+            animationEdges = new Edge[0];
             animationStep = 0;
-            for (int i = 0; i < pcbGraph.ComponentCount; i++)
-                pcbGraph.Components[i].IsVisited = false;
+            ResetVisited();
             btnRunPrim.Enabled = true;
             lblCost.Text = "—";
         }
 
-        private string? FindSourceId(Edge target)
+        private string FindSourceId(Edge target)
         {
             for (int i = 0; i < pcbGraph.ComponentCount; i++)
             {
@@ -752,7 +790,8 @@ namespace PCBBaglantiAgiOptimizasyonu
         private void UpdateCostLabel()
         {
             int total = 0;
-            foreach (var e in mstEdges) total += e.Weight;
+            for (int i = 0; i < mstCount; i++)
+                if (mstEdges[i] != null) total += mstEdges[i].Weight;
             lblCost.Text = total.ToString();
         }
     }
