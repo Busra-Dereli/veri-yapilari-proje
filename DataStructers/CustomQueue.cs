@@ -1,11 +1,14 @@
+// Proje Ekibi:
+// Busra Dereli
+
 namespace PCBBaglantiAgiOptimizasyonu
 {
     public class CustomQueue 
     {
-        // Kuyruğun sadece kendi içinde kullanacağı vagon yapısı
+        // Kuyrugun sadece kendi icinde kullanacagi vagon yapisi
         private class QueueNode 
         {
-            public Node Data;       // Vagonun içindeki yük (Anakart bileşeni)
+            public Node Data;       // Vagonun icindeki yuk (Anakart bileseni)
             public QueueNode Next;  // Arkadaki vagon
 
             public QueueNode(Node data) 
@@ -15,39 +18,39 @@ namespace PCBBaglantiAgiOptimizasyonu
             }
         }
 
-        private QueueNode front; // Kuyruğun başı (İşlemi bitip çıkacak olan)
-        private QueueNode rear;  // Kuyruğun sonu (Yeni gelenin ekleneceği yer)
+        private QueueNode front; // Kuyrugun basi (Islemi bitip cikacak olan)
+        private QueueNode rear;  // Kuyrugun sonu (Yeni gelenin eklenecegi yer)
 
-        // Kuyruğa yeni eleman ekleme (Arkadan sıraya girme)
+        // Kuyruga yeni eleman ekleme (Arkadan siraya girme)
         public void Enqueue(Node data) 
         {
             QueueNode newNode = new QueueNode(data);
             
-            if (rear == null) // Eğer kuyruk tamamen boşsa
+            if (rear == null) // Eger kuyruk tamamen bossa
             {
                 front = rear = newNode;
                 return;
             }
             
-            // Son elemanın arkasına yenisini bağla ve yeni son eleman o olsun
+            // Son elemanin arkasina yenisini bagla ve yeni son eleman o olsun
             rear.Next = newNode;
             rear = newNode;
         }
 
-        // Kuyruktan eleman çıkarma (Önden sırası geleni alma)
+        // Kuyruktan eleman cikarma (Onden sirasi geleni alma)
         public Node Dequeue() 
         {
-            if (front == null) return null; // Kuyruk boşsa
+            if (front == null) return null; // Kuyruk bossa
             
-            Node temp = front.Data; // Çıkacak elemanın verisini yedekle
-            front = front.Next;     // Kuyruğun başını bir arkadakine kaydır
+            Node temp = front.Data; // Cikacak elemanin verisini yedekle
+            front = front.Next;     // Kuyrugun basini bir arkadakine kaydir
             
-            if (front == null) rear = null; // Son eleman da çıktıysa kuyruğu tamamen sıfırla
+            if (front == null) rear = null; // Son eleman da ciktiysa kuyrugu tamamen sifirla
             
             return temp;
         }
 
-        // Kuyruk boş mu kontrolü (BFS'nin döngüsünü bitirmek için gerekli)
+        // Kuyruk bos mu kontrolu (BFS in dongusunu bitirmek icin gerekli)
         public bool IsEmpty() 
         {
             return front == null;
