@@ -2,6 +2,8 @@ using System;
 
 namespace PCBBaglantiAgiOptimizasyonu
 {
+    // Proje Ekibi:
+    // Busra Dereli
     public class Node 
     {
         public string Id;        
@@ -16,7 +18,7 @@ namespace PCBBaglantiAgiOptimizasyonu
 
         public void AddEdge(Node destination, int weight = 1) 
         {
-            Edge newEdge = new Edge(destination, weight);
+            Edge newEdge = new Edge(this, destination, weight);
             
             if (HeadEdge == null) 
             {
