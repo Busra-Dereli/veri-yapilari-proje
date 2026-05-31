@@ -1,10 +1,3 @@
-// Proje Ekibi:
-// Proje Ekibi:
-// KAAN ORHAN 
-// NUMAN KARABUGA 
-// AHMET DEMIRBILEK 
-// BUSRA DERELI
-
 namespace PCBBaglantiAgiOptimizasyonu
 {
     public class PrimAlgorithm
