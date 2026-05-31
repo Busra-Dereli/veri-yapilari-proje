@@ -4,8 +4,6 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using PCBBaglantiAgiOptimizasyonu;
 
-// Proje Ekibi:
-// Busra Dereli
 
 namespace PCBBaglantiAgiOptimizasyonu
 {
