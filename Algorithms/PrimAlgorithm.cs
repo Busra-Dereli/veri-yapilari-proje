@@ -1,60 +1,59 @@
-using System.Collections.Generic;
+// Proje Ekibi:
+// Busra Dereli
 
 namespace PCBBaglantiAgiOptimizasyonu
 {
     public class PrimAlgorithm
     {
-      
-        public List<Edge> Run(Node startNode, Graph pcbGraph)
+        public Edge[] Run(Node startNode, Graph pcbGraph)
         {
-            List<Edge> mstEdges = new List<Edge>();
+            Edge[] mstEdges = new Edge[pcbGraph.ComponentCount];
+            int mstCount = 0;
             MinHeap minHeap = new MinHeap();
-            
-         
-            int visitedCount = 0; 
-            
+
+            int visitedCount = 0;
+
             startNode.IsVisited = true;
             visitedCount++;
 
-        
             Edge currentAdj = startNode.HeadEdge;
             while (currentAdj != null)
             {
                 minHeap.Insert(currentAdj);
-                currentAdj = currentAdj.Next; 
+                currentAdj = currentAdj.Next;
             }
 
-           
             while (visitedCount < pcbGraph.ComponentCount)
             {
                 Edge currentEdge = minHeap.ExtractMin();
-                if(currentEdge == null) break;
+                if (currentEdge == null) break;
 
-               
                 if (currentEdge.Destination.IsVisited)
                 {
                     continue;
                 }
 
-              
-                mstEdges.Add(currentEdge);
+                mstEdges[mstCount++] = currentEdge;
                 currentEdge.Destination.IsVisited = true;
                 visitedCount++;
 
-             
                 Edge nextAdj = currentEdge.Destination.HeadEdge;
                 while (nextAdj != null)
                 {
-                   
                     if (!nextAdj.Destination.IsVisited)
                     {
                         minHeap.Insert(nextAdj);
                     }
-                    nextAdj = nextAdj.Next; 
+                    nextAdj = nextAdj.Next;
                 }
             }
-            
-            return mstEdges;
+
+            // Sadece dolu olan kismi don
+            Edge[] result = new Edge[mstCount];
+            for (int i = 0; i < mstCount; i++)
+                result[i] = mstEdges[i];
+
+            return result;
         }
     }
 }
