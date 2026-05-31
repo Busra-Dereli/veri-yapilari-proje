@@ -1,48 +1,49 @@
 ================================================================================
-Veri Yapıları ve Algoritmalar Projesi: PCB Bağlantı Optimizasyonu
+Veri Yapilari ve Algoritmalar Projesi: PCB Baglanti Optimizasyonu
 ================================================================================
 
-1. ZAMAN KARMAŞIKLIĞI ANALİZİ (TIME COMPLEXITY)
+1. ZAMAN KARMASIKLIGI ANALIZi (TIME COMPLEXITY)
 -----------------------------------------------
-Prim Algoritmasının toplam zaman karmaşıklığı, kullanılan veri yapısına doğrudan 
-bağlıdır. Yapılan implementasyon üzerinden analiz şu şekildedir:
+Prim Algoritmasinin toplam zaman karmasikligi, kullanilan veri yapisina dogrudan 
+baglidir. Yapilan implementasyon uzerinden analiz su sekildedir:
 
-- Değişken Tanımları:
-  V: Graf üzerindeki toplam düğüm (bileşen) sayısı.
-  E: Graf üzerindeki toplam kenar (olası bağlantı) sayısı.
+- Degisken Tanimlari:
+  V: Graf uzerindeki toplam dugum (bilesen) sayisi.
+  E: Graf uzerindeki toplam kenar (olasibaglanti) sayisi.
 
-- Min-Heap Operasyonları:
-  Sıfırdan yazılan Min-Heap yapısında bir elemanın eklenmesi (Insert) ve en düşük 
-  maliyetli elemanın çıkarılması (ExtractMin) işlemleri, ikili ağaç yüksekliğine 
-  bağlı olarak O(log V) karmaşıklığa sahiptir.
+- Min-Heap Operasyonlari:
+  Sifirdan yazilan Min-Heap yapisinda bir elemanin eklenmesi (Insert) ve en dusuk 
+  maliyetli elemanin cikarilmasi (ExtractMin) islemleri, ikili agac yuksekligine 
+  bagli olarak O(log V) karmasikliga sahiptir.
 
-- Toplam Süreç:
-  1. Algoritma, graf üzerindeki her bir kenarı (E) en fazla bir kez değerlendirir.
-  2. Her bir kenar için en kötü senaryoda Min-Heap üzerinde bir ekleme veya 
-     çıkarma işlemi gerçekleştirilir (O(log V)).
+- Toplam Surec:
+  1. Algoritma, graf uzerindeki her bir kenari (E) en fazla bir kez degerlendirir.
+  2. Her bir kenar icin en kotu senaryoda Min-Heap uzerinde bir ekleme veya 
+     cikarma islemi gerceklestirilir (O(log V)).
   
-Sonuç: Algoritmanın toplam zaman karmaşıklığı matematiksel olarak O(E log V) 
-olarak ispatlanmıştır. Bu karmaşıklık düzeyi, yüksek yoğunluklu PCB tasarımları 
-için yüksek performans ve ölçeklenebilirlik sunmaktadır.
+Sonuc: Algoritmanin toplam zaman karmasikligi matematiksel olarak O(E log V) 
+olarak ispatlanmistir. Bu karmasiklik duzeyi, yuksek yogunluklu PCB tasarimlari 
+icin yuksek performans ve olceklenebilirlik sunmaktadir.
 
-2. UZAY KARMAŞIKLIĞI ANALİZİ (SPACE COMPLEXITY)
+2. UZAY KARMASIKLIGI ANALIZi (SPACE COMPLEXITY)
 -----------------------------------------------
-Algoritmanın çalışma esnasında bellek (RAM) üzerindeki kullanımı şu şekildedir:
+Algoritmanin calisma esnasinda bellek (RAM) uzerindeki kullanimi su sekildedir:
 
-- Adjacency List (Komşuluk Listesi): Düğümleri ve kenarları tutmak için O(V + E) 
+- Adjacency List (Komsuluk Listesi): Dugumleri ve kenarlari tutmak icin O(V + E) 
   alan kaplar.
-- Min-Heap Yapısı: En kötü durumda tüm kenarları tutabileceği için O(E) alan kaplar.
-- Visited Set (Ziyaret Edilenler): Her düğümü bir kez işaretlediği için O(V) 
+- Min-Heap Yapisi: En kotu durumda tum kenarlari tutabilecegi icin O(E) alan kaplar.
+- Visited Set (Ziyaret Edilenler): Her dugumu bir kez isaretledigi icin O(V) 
   alan kaplar.
 
-Sonuç: Toplam uzay karmaşıklığı O(V + E) seviyesindedir. Bellek kullanımı verimlidir 
-ve sistem kaynaklarını optimize eder.
+Sonuc: Toplam uzay karmasikligi O(V + E) seviyesindedir. Bellek kullanimi verimlidir 
+ve sistem kaynaklarini optimize eder.
 
-3. MÜHENDİSLİK DEĞERLENDİRMESİ
+3. MUHENDISLiK DEGERLENDiRMESi
 ------------------------------
-Yazılan Prim Algoritması ve Min-Heap yapısı, projenin temel hedefi olan Minimum 
-Spanning Tree (MST) eldesini garantilemektedir. Implementasyon, döngü (cycle) 
-oluşumunu HashSet tabanlı kontrol mekanizması ile engelleyerek PCB üzerinde 
-elektriksel kısa devre riskini ortadan kaldıracak şekilde tasarlanmıştır.
+Yazilan Prim Algoritmasi ve Min-Heap yapisi, projenin temel hedefi olan Minimum 
+Spanning Tree (MST) eldesini garantilemektedir. Implementasyon, dongu (cycle) 
+olusumunu her dugumde tutulan IsVisited bayragi ile engelleyerek PCB uzerinde 
+elektriksel kisa devre riskini ortadan kaldiracak sekilde tasarlanmistir.
 
 ================================================================================
+
