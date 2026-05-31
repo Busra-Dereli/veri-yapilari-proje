@@ -28,7 +28,7 @@ namespace PCBBaglantiAgiOptimizasyonu
         // --- VERI ---
         private Graph pcbGraph = new Graph(200);
         private List<Edge> mstEdges = new List<Edge>();
-        private List<Edge> animationEdges = new List<Edge>();
+        private Edge[] animationEdges = new Edge[0];
         private int animationStep = 0;
         private System.Windows.Forms.Timer animationTimer = new System.Windows.Forms.Timer();
         private Dictionary<string, PointF> nodePositions = new Dictionary<string, PointF>();
@@ -328,7 +328,7 @@ namespace PCBBaglantiAgiOptimizasyonu
             animationTimer.Interval = 800;
             animationTimer.Tick += (s, e) =>
             {
-                if (animationStep < animationEdges.Count)
+                if (animationStep < animationEdges.Length)
                 {
                     mstEdges.Add(animationEdges[animationStep]);
                     animationStep++;
@@ -336,7 +336,7 @@ namespace PCBBaglantiAgiOptimizasyonu
 
                     // [DUZELTME 1] Her adimda maliyet dinamik guncelleniyor
                     UpdateCostLabel();
-                    lblStatus.Text = "Adim " + animationStep + " / " + animationEdges.Count;
+                    lblStatus.Text = "Adim " + animationStep + " / " + animationEdges.Length;
                 }
                 else
                 {
@@ -513,7 +513,7 @@ namespace PCBBaglantiAgiOptimizasyonu
 
             ResetVisited();
             mstEdges.Clear();
-            animationEdges.Clear();
+            animationEdges = new Edge[0];
             animationStep = 0;
             lblCost.Text = "0"; // [DUZELTME 1] Sifirdan basliyor
 
@@ -723,7 +723,7 @@ namespace PCBBaglantiAgiOptimizasyonu
             pcbGraph = new Graph(200);
             nodePositions.Clear();
             mstEdges.Clear();
-            animationEdges.Clear();
+            animationEdges = new Edge[0];
             traversalOrder.Clear();
             animationStep = 0;
             traversalStep = 0;
@@ -740,7 +740,7 @@ namespace PCBBaglantiAgiOptimizasyonu
         {
             animationTimer.Stop();
             mstEdges.Clear();
-            animationEdges.Clear();
+            animationEdges = new Edge[0];
             animationStep = 0;
             ResetVisited();
             btnRunPrim.Enabled = true;
