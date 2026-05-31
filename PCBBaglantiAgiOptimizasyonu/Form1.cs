@@ -485,7 +485,7 @@ namespace PCBBaglantiAgiOptimizasyonu
         // ─────────────────────────────────────────
         // PRiM
         // ─────────────────────────────────────────
-        private void BtnRunPrim_Click(object sender, EventArgs e)
+        private async void BtnRunPrim_Click(object sender, EventArgs e)
         {
             if (pcbGraph.ComponentCount == 0) return;
 
@@ -503,11 +503,16 @@ namespace PCBBaglantiAgiOptimizasyonu
             animationStep = 0;
             lblCost.Text = "—";
 
-            var result = new PrimAlgorithm().Run(pcbGraph.Components[0], pcbGraph);
-            animationEdges = result;
-
+            // Prim hesaplamasi UI thread ini bloke etmemesi icin ayri thread te calistirilir
             btnRunPrim.Enabled = false;
             lblStatus.Text = "Hesaplaniyor...";
+            var startNode = pcbGraph.Components[0];
+            var graphRef = pcbGraph;
+            var result = await System.Threading.Tasks.Task.Run(() =>
+                new PrimAlgorithm().Run(startNode, graphRef)
+            );
+            animationEdges = result;
+
             animationTimer.Start();
         }
 
@@ -794,3 +799,4 @@ namespace PCBBaglantiAgiOptimizasyonu
         }
     }
 }
+
