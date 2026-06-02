@@ -104,7 +104,7 @@ namespace PCBBaglantiAgiOptimizasyonu
             AddSeparator(controlPanel, ref y, 20);
 
             // Butonlar
-            btnGenerate = AddButton(controlPanel, "Yeni Graf Urt", ref y);
+            btnGenerate = AddButton(controlPanel, "Yeni Graf Uret", ref y);
             btnRunPrim = AddButton(controlPanel, "Prim Algoritmasi", ref y);
             btnReset = AddButton(controlPanel, "Sifirla", ref y);
 
@@ -508,6 +508,11 @@ namespace PCBBaglantiAgiOptimizasyonu
                 return;
             }
 
+            traversalTimer.Stop();
+            traversalOrder.Clear();
+            traversalStep = 0;
+            traversalMode = "";
+
             ResetVisited();
             mstEdges.Clear();
             animationEdges = new Edge[0];
@@ -515,7 +520,7 @@ namespace PCBBaglantiAgiOptimizasyonu
             lblCost.Text = "0"; // [DUZELTME 1] Sifirdan basliyor
 
             var result = new PrimAlgorithm().Run(pcbGraph.Components[0], pcbGraph);
-            animationEdges = result;
+            animationEdges = result.ToArray();
 
             btnRunPrim.Enabled = false;
             lblStatus.Text = "Hesaplaniyor...";
