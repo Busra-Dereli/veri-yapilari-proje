@@ -55,7 +55,7 @@ namespace PCBBaglantiAgiOptimizasyonu
             InitializeComponent();
             BuildUI();
             SetupTimer();
-            GenerateRandomGraph(18);
+            GenerateRandomGraph(new Random().Next(20,101));
         }
 
         // -----------------------------------------
@@ -65,7 +65,7 @@ namespace PCBBaglantiAgiOptimizasyonu
         {
             // [DUZELTME 3] Baslik cok uzun kesiliyordu, kisaltildi
             this.Text = "PCB Baglanti Agi - Prim MST";
-            this.Size = new Size(1280, 780);
+            this.Size = new Size(1280, 600);
             this.MinimumSize = new Size(960, 620);
             this.BackColor = BG_DARK;
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -91,11 +91,9 @@ namespace PCBBaglantiAgiOptimizasyonu
                 Text = "PCB",
                 Font = new Font("Segoe UI", 18, FontStyle.Bold),
                 ForeColor = TEXT_PRIMARY,
-                AutoSize = false,
-                Width = 170,
-                Height = 30,
+                AutoSize = true,
                 Left = 20,
-                Top = y
+                Top = y-10
             };
             controlPanel.Controls.Add(lblPCB);
             y += 32;
