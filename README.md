@@ -1,48 +1,117 @@
-# Veri Yapıları Projesi
+# 🚀 PCB Bağlantı Ağı Optimizasyonu
 
-# PCB Bağlantı Ağı Optimizasyon Simülasyonu
+> Bu proje, anakart (PCB) üzerindeki bileşenler arasında **döngüsüz ve minimum maliyetli bağlantı ağı** oluşturmayı amaçlayan bir graf optimizasyon simülasyonudur. Prim Algoritması ve sıfırdan yazılmış veri yapıları kullanılarak geliştirilmiştir.
 
-Bu proje, bir baskı devre kartı (PCB) üzerindeki bileşenlerin (direnç, kapasitör, entegre vb.) en kısa ve en verimli şekilde birbirine bağlanmasını sağlayan bir simülasyon sistemidir. Proje, mikroservis mimarisi kullanılarak asenkron ve ölçeklenebilir bir yapıda tasarlanmıştır.
+---
 
-## 🚀 Proje Durumu: Ara Rapor Aşaması
-Projemiz, ekip üyelerinin ortak teknik tartışmalarını yürüttüğü, görev dağılımının netleştiği ve aktif versiyon kontrolü (Git) süreçlerinin başlatıldığı seviyeye ulaşmıştır.
+## 👥 Ekip Bilgileri
 
-## ⚙️ Temel Veri Yapıları ve Graf Altyapısı:
+| İsim | Öğrenci No |
+|------|------------|
+| Kaan Orhan | 032490039 |
+| Numan Karabuga | 032490044 |
+| Ahmet Demirbilek | 032490045 |
+| Busra Dereli | 032490047 |
 
-Projenin çekirdek mimarisini oluşturacak olan temel veri yapıları üzerinde çalışmalara başlanmıştır. Standart kütüphaneler kullanılmadan, sistemin bellekte verimli çalışmasını sağlayacak sınıfların (class) iskeletleri araştırılıp oluşturulmaktadır.
+> **Proje Durumu:** ✅ Tam fonksiyonel şekilde tamamlanmıştır.
 
-Mevcut Durum ve Alınan Kararlar:
+---
 
-* **Graf Modellemesi:** PCB üzerindeki bileşenlerin birbirine bağlanması sürecini simüle etmek için "Komşuluk Listesi" yaklaşımı tercih edilmiştir. Bu yapı, bellek ve zaman karmaşıklığı optimizasyonu göz önünde bulundurularak Graph sınıfı altında sıfırdan geliştirilmektedir.
+## ⚙️ Sistem Mimarisi ve Teknolojik Altyapı
 
-* **Dolaşım Yapıları:** Graf üzerindeki erişilebilirlik kontrollerini yapabilmek adına, bağlı liste (linked list) mantığına dayanan özel CustomQueue (Kuyruk) ve CustomStack (Yığıt) sınıflarının tasarımlarına başlanmıştır.
+### 🔄 Katmanlı Mimari ve Eşzamanlılık (Thread-Safe / Async)
 
-* **Algoritmik Altyapı:** Başlangıç düğüm bağlantılarının doğrulanması için DFS (Depth-First Search) ve BFS (Breadth-First Search) algoritmalarının pseudo-kodları çıkarılmış, sisteme entegrasyonu için ön hazırlıklar tamamlanmıştır.
+- **Modüler Tasarım:** Veri yapıları, algoritmalar ve arayüz katmanları birbirinden bağımsız modüller halinde geliştirilmiştir.
+- **UI Thread Güvencesi:** Prim Algoritması, kullanıcı arayüzünü dondurmamak için `async/await` (`Task.Run`) mekanizmasıyla ana thread'den bağımsız çalıştırılmaktadır.
 
-* **Sonraki Adımlar:** Node ve Edge sınıflarının kodlanması ve bu yapıların GitHub üzerinden kendi dalımdan (branch) ana dala (master) aktarılması (Pull Request).
+### 🐳 Docker ile Kurulum
 
-## 🧠 Algoritma ve Optimizasyon Altyapısı
-Projenin kalbini oluşturan bağlantı maliyeti optimizasyonu, hazır kütüphanelerden tamamen bağımsız, özelleştirilmiş algoritmik yapılarla inşa edilmektedir. Bu kapsamda:
-* **Özelleştirilmiş Veri Yapıları:** Arama ve minimum maliyetli kenar seçimi operasyonlarını logaritmik sürede gerçekleştirebilmek için **Min-Heap (Priority Queue)** yapısı sıfırdan tasarlanıp kodlanmaktadır.
-* **MST İnşası ve Analiz:** Ağ üzerindeki düğümleri döngüye yer vermeden (cycle-free) en düşük maliyetle bağlamak için **Prim Algoritması** kullanılmaktadır. Geliştirilen bu çekirdek yapının Zaman (Time) ve Uzay (Space) karmaşıklıkları matematiksel olarak analiz edilip projenin ilerleyen fazlarında raporlanacaktır.
+Tüm sistem, tek bir komutla ortam bağımlılığı olmaksızın ayağa kaldırılabilir:
 
-## 🎨 Arayüz ve Kullanıcı Deneyimi (UI/UX)
-* **Teknoloji:** WinForms & GDI+ (Düşük gecikmeli grafik renderlama)
-* **Görselleştirme:** Komşuluk Listesi (Adjacency List) verilerinin dinamik düğüm koordinatları ile eşlenmesi
-* **Etkileşim:** Mouse-event tabanlı düğüm sürükleme ve anlık bağlantı yolu güncelleme altyapısı
+```bash
+docker-compose up --build
+```
 
-## 📈 Git Akış Şeması (Workflow)
-Proje süreci, ara rapor dökümanındaki rehbere tam uyumlu şekilde GitHub üzerinden yönetilmektedir:
-* **Issue Tracking:** Her teknik zorluk ve özellik (feature) bir "Issue" olarak açılır ve ekip içinde tartışılır.
-* **Branching:** Her üye kendi görevini feature/ ön ekiyle açtığı bağımsız dallarda geliştirir.
-* **Pull Requests:** Kodlar ana branch'e birleştirilmeden önce Review sürecinden geçer ve dokümante edilir.
+`Dockerfile` ve `docker-compose.yml` dosyaları tüm bağımlılıkları otomatik olarak çözümler.
 
-## 📝 Aktif Tartışmalar ve Güncel Kararlar
-* **[ISSUE #1]** Dinamik güncelleme için 20-100 düğüm aralığında performans test senaryoları oluşturulması planlanıyor.
+### 🌿 Git Workflow & Versiyon Kontrolü
 
+Geliştirme süreci branch ve Pull Request (PR) mekanizmalarıyla yürütülmüştür. `master/main` dalına doğrudan müdahale edilmemiştir.
 
+---
 
+## 🏗️ Çekirdek Veri Yapıları
 
+> **Not:** Tüm temel veri yapıları `System.Collections.Generic` gibi hazır kütüphaneler kullanılmadan, **işaretçilerle (pointer) sıfırdan** implemente edilmiştir.
 
+### 📐 Sınıf (UML) Yapısı
 
+| Sınıf | Açıklama |
+|-------|----------|
+| `Graph` | Tüm sistemi kapsar; anakart üzerindeki `Node` nesnelerini bir dizi (array) içinde tutar. |
+| `Node` | Direnç, kapasitör veya entegre gibi fiziksel bileşenleri temsil eder. Kenarları bağlı liste mantığıyla saklar. |
+| `Edge` | İki `Node` arasındaki elektriksel bağlantıyı ve ağırlığını (maliyet/mesafe) tutar. |
+| `CustomStack` & `CustomQueue` | İşaretçilerle yazılmış dinamik veri yapılarıdır. |
+| `MinHeap` & `PrimAlgorithm` | Projenin çekirdek optimizasyon motorudur; Minimum Spanning Tree hesaplar. |
 
+---
+
+## 📊 Algoritma Karmaşıklığı Analizi
+
+### ⏳ Zaman Karmaşıklığı (Time Complexity)
+
+| Metot / İşlem | Zaman Karmaşıklığı (Big-O) | Algoritmik Açıklama |
+|---------------|---------------------------|----------------------|
+| `Graph.AddNode` | O(1) | Diziye doğrudan indeks ile atama yapılır. |
+| `Graph.FindNode` | O(V) | Benzersiz ID için doğrusal arama yapılır. |
+| `Node.AddEdge` | O(E) | Bağlı listenin sonuna ulaşmak için liste taranır. |
+| `CustomQueue` & `CustomStack` | O(1) | İşaretçilerle doğrudan ekleme/çıkarma yapılır. |
+| `Min-Heap` (Insert/ExtractMin) | O(log V) | Heapify işlemleri ağaç yüksekliği kadar sürer. |
+| **Prim Algoritması** | **O(E log V)** | Her kenar değerlendirilir, Min-Heap işlemine tabi tutulur. |
+
+### 💾 Uzay Karmaşıklığı (Space Complexity)
+
+| Yapı | Karmaşıklık |
+|------|-------------|
+| Komşuluk Listesi (Adjacency List) | O(V + E) |
+| Min-Heap Kapasitesi | O(E) |
+| Ziyaret Takip Dizisi (`IsVisited`) | O(V) |
+| **Toplam** | **O(V + E)** |
+
+### 🛠️ Mühendislik ve Güvenlik
+
+- **Kısa Devre Engelleme:** Prim algoritması, PCB üzerinde döngü içermeyen en kısa bağlantıyı (MST) garanti eder.
+- **Elektriksel Güvenlik:** `IsVisited` bayrağı sayesinde graf üzerinde döngü (cycle) oluşumu engellenerek **elektriksel kısa devre riskleri tamamen ortadan kaldırılmıştır**.
+
+---
+
+## 🖥️ Dinamik Kullanıcı Arayüzü ve Görselleştirme
+
+- **Mouse ile Dinamik Etkileşim:** Simülasyon ekranına tıklandığında o koordinatta anında yeni bir `Node` oluşturulur.
+- **Anlık İstatistik Paneli:** Yeni düğüm eklendiğinde sol paneldeki "Toplam Düğüm Sayısı" ve "Toplam Kenar Sayısı" asenkron olarak güncellenir.
+- **Algoritmik Animasyon:** Prim algoritması tetiklendiğinde seçilen MST kenarları ayırt edici renklerle animasyonlu olarak çizilir.
+- **Renk ve State Temizliği:** BFS/DFS sonrası Prim'e geçildiğinde eski dolaşım renkleri temizlenerek state karmaşası önlenir.
+- **Sentetik Test Verisi:** Sistem, **20 ile 100 düğüm** arasında farklı ağırlıklı rastgele topolojiler üretilerek test edilmiştir.
+
+---
+
+## 🤖 GenAI Prompt Dökümü
+
+Projede kullanılan yapay zeka destekli geliştirme sürecine ait promptlar:
+
+1. **Mouse Olayları:** Simülasyon ekranında mouse tıklamasıyla node oluşturma, komşulara rastgele bağlama ve istatistik panelini güncelleme mekanizması.
+2. **MinHeap Geliştirme:** C# ile sıfırdan `MinHeap` tasarımı; `Insert` ve `HeapifyUp` metotlarındaki yazım hataları ve indeks güncelleme eksiklikleri giderimi.
+3. **Veri Yapısı Seçimi:** Komşuluk Listesi vs. Komşuluk Matrisi karşılaştırması; standart kütüphane kullanmadan bağlı liste mantığıyla sıfırdan implementasyon.
+4. **Renk/State Temizliği:** BFS/DFS sonrası Prim'e geçildiğinde ekranda kalan eski dolaşım renklerinin temizlenmesi.
+5. **Proje Eksik Analizi:** Değerlendirme kriterleri üzerinden projede eksik kalan noktaların tespiti.
+6. **Docker Konfigürasyonu:** `Dockerfile` ve `docker-compose.yaml` dosyalarının hazırlanması.
+7. **Sentetik Test Verisi:** 20–100 arası farklı ağırlıklarda düğüm oluşturma mekanizmasının eklenmesi.
+8. **Thread Safety:** Prim temizleyicilerinin UI thread'inden `Task.Run` ile ayrı thread'e taşınması.
+
+---
+
+## 📺 Proje Demo Videosu
+
+Sistemin Docker üzerinde ayağa kalkışını, dinamik düğüm ekleme/silme işlemlerini ve core kod analizini içeren demo videoya aşağıdan ulaşabilirsiniz:
+
+🔗 **[Proje Demo Videosu](https://github.com/Busra-Dereli/veri-yapilari-proje)**
