@@ -121,8 +121,11 @@ Projede kullanılan yapay zeka destekli geliştirme sürecine ait promptlar:
 
 ---
 
-## 📺 Proje Demo Videosu
+## 📺 Proje Demo Videosu ve Rapor
 
 Sistemin Docker üzerinde ayağa kalkışını, dinamik düğüm ekleme/silme işlemlerini ve core kod analizini içeren demo videoya aşağıdan ulaşabilirsiniz:
 
 🔗 **[Proje Demo Videosu](https://drive.google.com/drive/home)**
+
+PCB-Rapor: [PCB Bağlantı Ağı Optimizasyonu.pdf](https://github.com/user-attachments/files/28574285/PCB.Baglanti.Agi.Optimizasyonu.pdf)
+
