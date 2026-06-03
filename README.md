@@ -125,4 +125,4 @@ Projede kullanılan yapay zeka destekli geliştirme sürecine ait promptlar:
 
 Sistemin Docker üzerinde ayağa kalkışını, dinamik düğüm ekleme/silme işlemlerini ve core kod analizini içeren demo videoya aşağıdan ulaşabilirsiniz:
 
-🔗 **[Proje Demo Videosu](https://github.com/Busra-Dereli/veri-yapilari-proje)**
+🔗 **[Proje Demo Videosu](https://drive.google.com/drive/home)**
