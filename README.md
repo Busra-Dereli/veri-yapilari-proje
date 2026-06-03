@@ -109,7 +109,7 @@ Projede kullanılan yapay zeka destekli geliştirme sürecine ait promptlar:
  
  **Prompt 5:** Proje değerlendirme kriterleri ve projeler burada bizimki konu 1. Buna göre başka ne eksik var projede söyle.
  
- **Prompt 6: ** Tamam o zaman `Dockerfile` ve `docker-compose.yaml` hazırlayalım.
+ **Prompt 6:** Tamam o zaman `Dockerfile` ve `docker-compose.yaml` hazırlayalım.
  
  **Prompt 7:** 20–100 arası farklı ağırlıklarda düğüm düğümler oluşturmam gerekiyor. Bunu ekledik mi projeye?
  
